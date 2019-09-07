@@ -1,20 +1,23 @@
-# Mobile Web Specialist Certification Course
+# Udacity Frontend Nanodegree - Restaurant Reviews App
 ---
-#### _Three Stage Course Material Project - Restaurant Reviews_
 
-## Project Overview: Stage 1
+Project 01 - Build a portfolio site. Demo Loading...
+
+## Description
+#### _Three Stage Course Material Project - Restaurant Reviews_
+### Project Overview: Stage 1
 
 For the **Restaurant Reviews** projects, you will incrementally convert a static webpage to a mobile-ready web application. In **Stage One**, you will take a static design that lacks accessibility and convert the design to be responsive on different sized displays and accessible for screen reader use. You will also add a service worker to begin the process of creating a seamless offline experience for your users.
 
-### Specification
+#### Specification
 
 You have been provided the code for a restaurant reviews website. The code has a lot of issues. It’s barely usable on a desktop browser, much less a mobile device. It also doesn’t include any standard accessibility features, and it doesn’t work offline at all. Your job is to update the code to resolve these issues while still maintaining the included functionality.
 
-### Project Rubric
+#### Project Rubric
 
 Your project will be evaluated by a Udacity code reviewer according to the [Restaurant Reviews project rubric](https://review.udacity.com/#!/rubrics/1090/view). Please review for detailed project requirements. The rubric should be a resource you refer to periodically to make sure your project meets specifications.
 
-### What do I do from here?
+#### What do I do from here?
 
 1. In this folder, start up a simple HTTP server to serve up the site files on your local computer. Python has some simple tools to do this, and you don't even need to know Python. For most people, it's already installed on your computer.
 
@@ -24,10 +27,19 @@ Your project will be evaluated by a Udacity code reviewer according to the [Rest
 3. Explore the provided code, and start making a plan to implement the required features in three areas: responsive design, accessibility and offline use.
 4. Write code to implement the updates to get this site on its way to being a mobile-ready website.
 
-## Leaflet.js and Mapbox:
+### Leaflet.js and Mapbox:
 
 This repository uses [leafletjs](https://leafletjs.com/) with [Mapbox](https://www.mapbox.com/). You need to replace `<your MAPBOX API KEY HERE>` with a token from [Mapbox](https://www.mapbox.com/). Mapbox is free to use, and does not require any payment information.
 
-### Note about ES6
+#### Note about ES6
 
 Most of the code in this project has been written to the ES6 JavaScript specification for compatibility with modern web browsers and future-proofing JavaScript code. As much as possible, try to maintain use of ES6 in any additional JavaScript you write.
+
+## Repo Creators
+    
+    Mohamed Aimane Skhairi
+    skhairimedaimane@gmail.com
+    
+## License
+
+This project is open-sourced software licensed under the [MIT License](./LICENSE).
