@@ -1,7 +1,7 @@
 # Udacity Frontend Nanodegree - Restaurant Reviews App
 ---
 
-Project 01 - Build a portfolio site. Demo Loading...
+Project 05 - Build a restaurant reviews app. Demo Loading...
 
 ## Description
 #### _Three Stage Course Material Project - Restaurant Reviews_
