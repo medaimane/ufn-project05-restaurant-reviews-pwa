@@ -5,6 +5,11 @@
   font-family: 'Dancing Script', cursive;
 }
 
+html, body {
+  min-height: 100%;
+  background-color: #fdfdfd;
+}
+
 body, td, th, p {
   font-size: 10pt;
   color: #333;
@@ -12,9 +17,9 @@ body, td, th, p {
 }
 
 body {
+  position: relative;
   background-color: #fdfdfd;
   margin: 0;
-  position: relative;
 }
 
 ul, li {
@@ -45,19 +50,22 @@ article, aside, canvas, details, figcaption, figure, footer, header, hgroup, men
 }
 
 #main-content {
-  background-color: #f3f3f3;
   min-height: 100%;
+  background-color: #f3f3f3;
 }
 
 #footer {
   background-color: #444;
+  bottom: 0;
+  position: fixed;
+  width: 100%;
 }
 
 #footer p {
   color: #aaa;
-  font-size: 12pt;
+  font-size: 8pt;
   letter-spacing: 1px;
-  padding: 25px;
+  padding: 2px;
   text-align: center;
   text-transform: uppercase;
 }
@@ -71,7 +79,8 @@ nav {
 }
 
 nav h1 {
-  margin: auto;
+  font-size: 18pt;
+  padding: 8px;
 }
 
 nav h1 a {
@@ -152,7 +161,12 @@ nav h1 a {
 
 /* ====================== Restaurant Listing ====================== */
 #restaurants-list {
-  background-color: #f3f3f3;
+  display: flex;
+  flex: 2;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  min-height: 100%;
   list-style: outside none none;
   margin: 0;
   padding: 30px 15px 60px;
@@ -227,12 +241,6 @@ nav h1 a {
   background-color: #ccc;
   height: 100%;
   width: 100%;
-}
-
-.inside #footer {
-  bottom: 0;
-  position: absolute;
-  width: 50%;
 }
 
 #restaurant-name {

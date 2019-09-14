@@ -1,3 +1,5 @@
+const ALL_RESTAURANTS = 'all';
+
 class DatabaseHelper {
 
   static get databaseURL() {
@@ -28,6 +30,7 @@ class DatabaseHelper {
 
       const json = JSON.parse(xhr.responseText);
       const restaurants = json.restaurants;
+
       callback(null, restaurants);
     };
     xhr.send();
@@ -73,12 +76,18 @@ class DatabaseHelper {
         return;
       }
 
+      // If all selected
+      if  (cuisine === ALL_RESTAURANTS || neighborhood === ALL_RESTAURANTS) {
+        callback(null, restaurants);
+        return;
+      }
+
       // Filter restaurants by cuisine type and neighborhood
       let result = [];
-      if (cuisine !== 'all') {
+      if (cuisine !== ALL_RESTAURANTS) {
         result = restaurants.filter(r => r.cuisine_type === cuisine);
       }
-      if (neighborhood !== 'all') {
+      if (neighborhood !== ALL_RESTAURANTS) {
         result = restaurants.filter(r => r.neighborhood === neighborhood);
       }
       callback(null, result);

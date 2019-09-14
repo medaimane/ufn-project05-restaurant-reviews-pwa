@@ -104,11 +104,9 @@ const resetRestaurants = (restaurants) => {
   self.restaurants = [];
   const ul = document.getElementById('restaurants-list');
   ul.innerHTML = '';
-
   if (self.markers) {
     self.markers.forEach(marker => marker.remove());
   }
-
   self.markers = [];
   self.restaurants = restaurants;
 };
