@@ -1,5 +1,6 @@
 let restaurant;
 let newMap;
+const mapBoxAccessToken = 'pk.eyJ1IjoibWVkYWltYW5lIiwiYSI6ImNrMDlwenVvdjBhZHMzbG1kN3JmcHFrcG8ifQ.7ZIgW9YoZ4nJ5tmSbEW6IQ';
 
 /**
  * Initialize map as soon as the page is loaded.
@@ -21,8 +22,9 @@ const initMap = () => {
         zoom: 16,
         scrollWheelZoom: false,
       });
+
       L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.jpg70?access_token={mapboxToken}', {
-        mapboxToken: '<your MAPBOX API KEY HERE>',
+        mapboxToken: mapBoxAccessToken,
         maxZoom: 18,
         attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
           '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
@@ -30,7 +32,7 @@ const initMap = () => {
         id: 'mapbox.streets',
       }).addTo(newMap);
       fillBreadcrumb();
-      DBHelper.mapMarkerForRestaurant(self.restaurant, self.newMap);
+      DatabaseHelper.mapMarkerForRestaurant(self.restaurant, self.newMap);
     }
   });
 };
@@ -46,7 +48,7 @@ const initMap = () => {
         scrollwheel: false,
       });
       fillBreadcrumb();
-      DBHelper.mapMarkerForRestaurant(self.restaurant, self.map);
+      DatabaseHelper.mapMarkerForRestaurant(self.restaurant, self.map);
     }
   });
 } */
@@ -62,10 +64,9 @@ const fetchRestaurantFromURL = callback => {
 
   const id = getParameterByName('id');
   if (!id) {
-    error = 'No restaurant id in URL';
-    callback(error, null);
+    callback('No restaurant id in URL', null);
   } else {
-    DBHelper.fetchRestaurantById(id, (error, restaurant) => {
+    DatabaseHelper.fetchRestaurantById(id, (error, restaurant) => {
       self.restaurant = restaurant;
       if (!restaurant) {
         console.error(error);
@@ -89,7 +90,7 @@ const fillRestaurantHTML = (restaurant = self.restaurant) => {
 
   const image = document.getElementById('restaurant-img');
   image.className = 'restaurant-img';
-  image.src = DBHelper.imageUrlForRestaurant(restaurant);
+  image.src = DatabaseHelper.restaurantImageUrl(restaurant.photograph);
 
   const cuisine = document.getElementById('restaurant-cuisine');
   cuisine.innerHTML = restaurant.cuisine_type;
