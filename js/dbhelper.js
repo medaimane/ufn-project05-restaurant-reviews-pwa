@@ -20,37 +20,36 @@ class DatabaseHelper {
     const xhr = new XMLHttpRequest();
     xhr.open('GET', DatabaseHelper.databaseURL);
     xhr.onload = () => {
-      if (xhr.status === 200) {
-        const json = JSON.parse(xhr.responseText);
-        const restaurants = json.restaurants;
-        callback(null, restaurants);
-      } else {
+      if (xhr.status !== 200) {
         const error = (`Request failed. Returned status of ${xhr.status}`);
         callback(error, null);
+        return;
       }
+
+      const json = JSON.parse(xhr.responseText);
+      const restaurants = json.restaurants;
+      callback(null, restaurants);
     };
     xhr.send();
   }
 
   static fetchRestaurantById(id, callback) {
     DatabaseHelper.fetchAllRestaurants((error, restaurants) => {
-      if (error) {
-        callback(error, null);
-      } else {
-        const restaurant = restaurants.find(r => r.id === id);
-        restaurant ? callback(null, restaurant) : callback('Restaurant does not exist', null);
+      if (DatabaseHelper.isError(error, callback)) {
+        return;
       }
+
+      const restaurant = restaurants.find(r => r.id === Number(id));
+      restaurant ? callback(null, restaurant) : callback('Restaurant does not exist', null);
     });
   }
 
   static fetchRestaurantByCuisine(cuisine, callback) {
     DatabaseHelper.fetchAllRestaurants((error, restaurants) => {
-      if (error) {
-        callback(error, null);
+      if (DatabaseHelper.isError(error, callback)) {
         return;
       }
 
-      // Filter restaurants by cuisine type
       const results = restaurants.filter(r => r.cuisine_type === cuisine);
       callback(null, results);
     });
@@ -58,8 +57,7 @@ class DatabaseHelper {
 
   static fetchRestaurantByNeighborhood(neighborhood, callback) {
     DatabaseHelper.fetchAllRestaurants((error, restaurants) => {
-      if (error) {
-        callback(error, null);
+      if (DatabaseHelper.isError(error, callback)) {
         return;
       }
 
@@ -71,8 +69,7 @@ class DatabaseHelper {
 
   static fetchRestaurantByCuisineAndNeighborhood(cuisine, neighborhood, callback) {
     DatabaseHelper.fetchAllRestaurants((error, restaurants) => {
-      if (error) {
-        callback(error, null);
+      if (DatabaseHelper.isError(error, callback)) {
         return;
       }
 
@@ -90,8 +87,7 @@ class DatabaseHelper {
 
   static fetchAllNeighborhoods(callback) {
     DatabaseHelper.fetchAllRestaurants((error, restaurants) => {
-      if (error) {
-        callback(error, null);
+      if (DatabaseHelper.isError(error, callback)) {
         return;
       }
 
@@ -103,8 +99,7 @@ class DatabaseHelper {
 
   static fetchAllCuisines(callback) {
     DatabaseHelper.fetchAllRestaurants((error, restaurants) => {
-      if (error) {
-        callback(error, null);
+      if (DatabaseHelper.isError(error, callback)) {
         return;
       }
 
@@ -114,30 +109,26 @@ class DatabaseHelper {
     });
   }
 
-  /**
-   * Map marker for a restaurant.
-   */
-   static mapMarkerForRestaurant(restaurant, map) {
+  static mapMarkerForRestaurant(restaurant, map) {
     // https://leafletjs.com/reference-1.3.0.html#marker
-    const marker = new L.marker([restaurant.latlng.lat, restaurant.latlng.lng],
-      {title: restaurant.name,
+    const marker = new L.marker([
+      restaurant.latlng.lat,
+      restaurant.latlng.lng
+    ], {
+      title: restaurant.name,
       alt: restaurant.name,
-        url: DatabaseHelper.restaurantURLWithIdAsParams(restaurant.id)
-      });
-      marker.addTo(newMap);
+      url: DatabaseHelper.restaurantURLWithIdAsParams(restaurant)
+    });
+    marker.addTo(map);
     return marker;
   }
 
-  /* static mapMarkerForRestaurant(restaurant, map) {
-    const marker = new google.maps.Marker({
-      position: restaurant.latlng,
-      title: restaurant.name,
-      url: DatabaseHelper.restaurantURLWithIdAsParams(restaurant),
-      map: map,
-      animation: google.maps.Animation.DROP},
-    );
-    return marker;
-  } */
-
+  static isError = (error, callback) => {
+    if (error) {
+      callback(error, null);
+      return true;
+    }
+    return false;
+  }
 }
 
