@@ -166,13 +166,18 @@ const createListOfReviews = reviews => {
 
 const createReviewHTML = review => {
   const li = document.createElement('li');
+  const infoDiv = document.createElement('div');
   const name = createReviewName(review);
   const date = createReviewDate(review);
   const rating = createReviewRating(review);
+  infoDiv.appendChild(name);
+  infoDiv.appendChild(date);
+  infoDiv.appendChild(rating);
+  infoDiv.className = 'review-info';
+  const commentDiv = document.createElement('div');
   const comments = createReviewComments(review);
-  li.appendChild(name);
-  li.appendChild(date);
-  li.appendChild(rating);
+  commentDiv.appendChild(comments);
+  li.appendChild(infoDiv);
   li.appendChild(comments);
   return li;
 };

@@ -315,12 +315,15 @@ nav h1 a {
 #reviews-list li {
   list-style-type: none;
   background-color: #fff;
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: space-between;
   overflow: hidden;
   padding: 20px;
   margin-bottom: 20px;
+}
+
+.review-info {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
 }
 
 #reviews-list li p {
