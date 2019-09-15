@@ -1,59 +1,13 @@
 let newMap;
 const mapBoxAccessToken = 'pk.eyJ1IjoibWVkYWltYW5lIiwiYSI6ImNrMDlwenVvdjBhZHMzbG1kN3JmcHFrcG8ifQ.7ZIgW9YoZ4nJ5tmSbEW6IQ';
 
-const onPageLoaded = (e) => {
+const onPageLoaded = () => {
   initMap();
   fetchAllNeighborhoods();
   fetchAllCuisines();
 };
 
 document.addEventListener('DOMContentLoaded', onPageLoaded);
-
-const fetchAllNeighborhoods = () => {
-  DatabaseHelper.fetchAllNeighborhoods((error, neighborhoods) => {
-    if(DatabaseHelper.isError(error, console.error)) {
-      return;
-    }
-
-    self.neighborhoods = neighborhoods;
-    fillNeighborhoodsHTML();
-  });
-};
-
-const fillNeighborhoodsHTML = (neighborhoods = self.neighborhoods) => {
-  const select = document.getElementById('neighborhoods-select');
-  neighborhoods.forEach(neighborhood => {
-    const option = document.createElement('option');
-    option.innerHTML = neighborhood;
-    option.value = neighborhood;
-    select.append(option);
-  });
-};
-
-const fetchAllCuisines = () => {
-  DatabaseHelper.fetchAllCuisines((error, cuisines) => {
-    if(DatabaseHelper.isError(error, console.error)) {
-      return;
-    }
-
-    self.cuisines = cuisines;
-    fillCuisinesHTML();
-  });
-};
-
-/**
- * Set cuisines HTML.
- */
-const fillCuisinesHTML = (cuisines = self.cuisines) => {
-  const select = document.getElementById('cuisines-select');
-
-  cuisines.forEach(cuisine => {
-    const option = document.createElement('option');
-    option.innerHTML = cuisine;
-    option.value = cuisine;
-    select.append(option);
-  });
-};
 
 const initMap = () => {
   createMap();
@@ -81,26 +35,34 @@ const setupTileLayer = () => {
 };
 
 const updateRestaurants = () => {
-  const cSelect = document.getElementById('cuisines-select');
-  const nSelect = document.getElementById('neighborhoods-select');
-
-  const cIndex = cSelect.selectedIndex;
-  const nIndex = nSelect.selectedIndex;
-
-  const cuisine = cSelect[cIndex].value;
-  const neighborhood = nSelect[nIndex].value;
-
-  DatabaseHelper.fetchRestaurantByCuisineAndNeighborhood(cuisine, neighborhood, (error, restaurants) => {
-    if(DatabaseHelper.isError(error, console.error)) {
-      return;
-    }
-
-    resetRestaurants(restaurants);
-    fillRestaurantsHTML();
-  })
+  const selectedCuisine = getSelectedCuisine();
+  const selectedNeighborhood = getSelectedNeighborhood();
+  DatabaseHelper.fetchRestaurantByCuisineAndNeighborhood(
+      selectedCuisine,
+      selectedNeighborhood,
+      (error, restaurants) => {
+        if(DatabaseHelper.isError(error, console.error)) {
+          return;
+        }
+        resetRestaurants(restaurants);
+        fillRestaurantsHTML(restaurants);
+      },
+  );
 };
 
-const resetRestaurants = (restaurants) => {
+const getSelectedCuisine = () => {
+  const cSelect = document.getElementById('cuisines-select');
+  const cIndex = cSelect.selectedIndex ? cSelect.selectedIndex : 0;
+  return cSelect[cIndex].value;
+};
+
+const getSelectedNeighborhood = () => {
+  const nSelect = document.getElementById('neighborhoods-select');
+  const nIndex = nSelect.selectedIndex ? nSelect.selectedIndex : 0;
+  return nSelect[nIndex].value;
+};
+
+const resetRestaurants = restaurants => {
   self.restaurants = [];
   const ul = document.getElementById('restaurants-list');
   ul.innerHTML = '';
@@ -111,15 +73,23 @@ const resetRestaurants = (restaurants) => {
   self.restaurants = restaurants;
 };
 
-const fillRestaurantsHTML = (restaurants = self.restaurants) => {
+const fillRestaurantsHTML = restaurants => {
   const ul = document.getElementById('restaurants-list');
   restaurants.forEach(restaurant => {
     ul.append(createRestaurantHTML(restaurant));
   });
-  addRestaurantsMarkersToMap();
+  addRestaurantsMarkersToMap(restaurants);
 };
 
-const createRestaurantHTML = (restaurant) => {
+const addRestaurantsMarkersToMap = restaurants => {
+  restaurants.forEach(restaurant => {
+    const marker = DatabaseHelper.mapMarkerForRestaurant(restaurant, newMap);
+    marker.on("click", () => window.location.href = marker.options.url);
+    self.markers.push(marker);
+  });
+};
+
+const createRestaurantHTML = restaurant => {
   const li = document.createElement('li');
   const image = createRestaurantImage(restaurant);
   const name = createRestaurantName(restaurant);
@@ -134,37 +104,68 @@ const createRestaurantHTML = (restaurant) => {
   return li;
 };
 
-const createRestaurantImage = (restaurant) => {
+const createRestaurantImage = restaurant => {
   const image = document.createElement('img');
   image.className = 'restaurant-img';
   image.src = DatabaseHelper.restaurantImageUrl(restaurant);
   return image;
 };
 
-const createRestaurantName = (restaurant) => {
+const createRestaurantName = restaurant => {
   const name = document.createElement('h1');
   name.innerHTML = restaurant.name;
   return name;
 };
 
-const createRestaurantParagraph = (content) => {
+const createRestaurantParagraph = content => {
   const p = document.createElement('p');
   p.innerHTML = content;
   return p;
 };
 
-const createRestaurantMoreInfoLink = (restaurant) => {
+const createRestaurantMoreInfoLink = restaurant => {
   const alink = document.createElement('a');
   alink.innerHTML = 'View Details';
   alink.href = DatabaseHelper.restaurantURLWithIdAsParams(restaurant);
   return alink;
 };
 
-const addRestaurantsMarkersToMap = (restaurants = self.restaurants) => {
-  restaurants.forEach(restaurant => {
-    const marker = DatabaseHelper.mapMarkerForRestaurant(restaurant, newMap);
-    marker.on("click", () => window.location.href = marker.options.url);
-    self.markers.push(marker);
+const fetchAllNeighborhoods = () => {
+  DatabaseHelper.fetchAllNeighborhoods((error, neighborhoods) => {
+    if(DatabaseHelper.isError(error, console.error)) {
+      return;
+    }
+    fillNeighborhoodsHTML(neighborhoods);
+  });
+};
+
+const fillNeighborhoodsHTML = neighborhoods => {
+  const select = document.getElementById('neighborhoods-select');
+  neighborhoods.forEach(neighborhood => {
+    const option = document.createElement('option');
+    option.innerHTML = neighborhood;
+    option.value = neighborhood;
+    select.append(option);
+  });
+};
+
+const fetchAllCuisines = () => {
+  DatabaseHelper.fetchAllCuisines((error, cuisines) => {
+    if(DatabaseHelper.isError(error, console.error)) {
+      return;
+    }
+    fillCuisinesHTML(cuisines);
+  });
+};
+
+const fillCuisinesHTML = cuisines => {
+  const select = document.getElementById('cuisines-select');
+
+  cuisines.forEach(cuisine => {
+    const option = document.createElement('option');
+    option.innerHTML = cuisine;
+    option.value = cuisine;
+    select.append(option);
   });
 };
 
