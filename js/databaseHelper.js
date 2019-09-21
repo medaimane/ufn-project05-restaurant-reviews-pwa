@@ -3,11 +3,11 @@ const ALL_RESTAURANTS = 'all';
 class DatabaseHelper {
 
   static get databaseURL() {
-    const BASE_URL = 'http://127.0.0.1';
-    const PORT = 3000;
+    // Deploy the website using github pages
+    const BASE_URL = 'https://medaimane.github.io/ufn-project05-restaurant-reviews-pwa';
     const restaurantsJSON = 'data/restaurants.json';
 
-    return `${BASE_URL}:${PORT}/${restaurantsJSON}`;
+    return `${BASE_URL}/${restaurantsJSON}`;
   }
 
   static restaurantURLWithIdAsParams({id}) {
