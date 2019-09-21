@@ -1,0 +1,11 @@
+{
+  "name": "Mohamed Aimane S.",
+  "short_name": "MAS",
+  "description": "Description: Udacity Frontend Developer Nanodegree, project: build a restaurant reviews app, Creator: Mohamed Aimane Skhairi <skhairimedaimane@gmail.com>, Category: Personal",
+  "start_url": "/?utm_source=homescreen",
+  "scope": "/",
+  "display": "fullscreen",
+  "background_color": "#252831",
+  "theme_color": "#f18200",
+  "icons": []
+}

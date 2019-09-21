@@ -169,4 +169,3 @@ const fillCuisinesHTML = cuisines => {
     select.append(option);
   });
 };
-
