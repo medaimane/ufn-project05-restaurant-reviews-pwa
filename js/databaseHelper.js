@@ -3,7 +3,7 @@ const ALL_RESTAURANTS = 'all';
 class DatabaseHelper {
 
   static get databaseURL() {
-    const BASE_URL = 'http://localhost';
+    const BASE_URL = 'http://127.0.0.1';
     const PORT = 3000;
     const restaurantsJSON = 'data/restaurants.json';
 
