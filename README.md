@@ -3,6 +3,12 @@
 
 Project 05 - Build a restaurant reviews app. Demo Loading...
 
+## Get Started
+
+- Clone repository to your local ```git clone <repo-link>```.
+- If you have python 3 installed, run the local server by ```./seve.sh```.
+- Open the provided link in the browser ```http://127.0.0.1:3000/```.
+
 ## Description
 #### _Three Stage Course Material Project - Restaurant Reviews_
 ### Project Overview: Stage 1
