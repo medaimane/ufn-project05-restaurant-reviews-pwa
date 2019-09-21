@@ -1,6 +1,9 @@
 @charset "utf-8";
 /* CSS Document */
 
+/**
+  General
+ */
 * {
   font-family: 'Dancing Script', cursive;
 }
@@ -8,27 +11,31 @@
 html, body {
   min-height: 100%;
   background-color: #fdfdfd;
-}
-
-body, td, th, p {
-  font-size: 10pt;
   color: #333;
   line-height: 1.5;
-}
-
-body {
   position: relative;
-  background-color: #fdfdfd;
   margin: 0;
 }
 
+footer, header, nav, section {
+  display: block;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0 0 20px;
+}
+
+td, th, p {
+  font-size: 12pt;
+}
+
 ul, li {
-  font-size: 10pt;
+  font-size: 12pt;
   color: #333;
 }
 
 a {
-  color: orange;
+  color: #ffa500;
   text-decoration: none;
 }
 
@@ -41,36 +48,9 @@ a img {
   border: none 0 #fff;
 }
 
-h1, h2, h3, h4, h5, h6 {
-  margin: 0 0 20px;
-}
-
-article, aside, canvas, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
-  display: block;
-}
-
-#main-content {
-  min-height: 100%;
-  background-color: #f3f3f3;
-}
-
-#footer {
-  background-color: #444;
-  bottom: 0;
-  position: fixed;
-  width: 100%;
-}
-
-#footer p {
-  color: #aaa;
-  font-size: 8pt;
-  letter-spacing: 1px;
-  padding: 2px;
-  text-align: center;
-  text-transform: uppercase;
-}
-
-/* ====================== Navigation ====================== */
+/**
+  Navigation
+ */
 nav {
   width: 100%;
   height: 20%;
@@ -124,14 +104,26 @@ nav h1 a {
     text-decoration: underline;
 }
 
-/* ====================== Map ====================== */
+/**
+  Main
+ */
+#main-content {
+  min-height: 100%;
+  background-color: #f3f3f3;
+}
+
+/**
+  Map
+ */
 #map {
   height: 550px;
   width: 100%;
   background-color: #ccc;
 }
 
-/* ====================== Restaurant Filtering ====================== */
+/**
+  Restaurant Filtering
+ */
 .filter-options {
   display: flex;
   flex: 1;
@@ -164,7 +156,9 @@ nav h1 a {
   padding: 1px;
 }
 
-/* ====================== Restaurant Listing ====================== */
+/**
+  Restaurant Listing
+ */
 #restaurants-list {
   display: flex;
   flex-flow: row wrap;
@@ -222,7 +216,9 @@ nav h1 a {
   text-transform: uppercase;
 }
 
-/* ====================== Restaurant Details ====================== */
+/**
+  Restaurant Details
+ */
 .inside header {
   position: fixed;
   top: 0;
@@ -243,7 +239,7 @@ nav h1 a {
   width: 100%;
 }
 
-#restaurant-container div:nth-child(2) {
+#restaurant-container section:nth-child(2) {
   align-self: center;
   align-content: center;
 }
@@ -254,7 +250,7 @@ nav h1 a {
   flex-flow: row wrap;
   justify-content: center;
   background-color: #f3f3f3;
-  padding: 5%;
+  padding: 2%;
 }
 
 #reviews-container h2 {
@@ -288,6 +284,7 @@ nav h1 a {
 #restaurant-address {
   font-size: 12pt;
   margin: 10px 0;
+  padding: 0 5px;
 }
 
 #restaurant-cuisine {
@@ -331,17 +328,44 @@ nav h1 a {
 }
 
 /**
+  Footer
+ */
+#footer {
+  background-color: #292929;
+  bottom: 0;
+  position: fixed;
+  width: 100%;
+}
+
+#footer p {
+  color: #b8b8b8;
+  font-size: 10pt;
+  letter-spacing: 1px;
+  padding: 1px;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+/**
  * Responsive
  */
 @media screen and (min-width: 850px) {
   #restaurant-container {
     margin-top: 80px;
+    padding-top: 50px;
+  }
+  #restaurant-name {
+    padding-top: 20px;
+  }
+  #reviews-container {
+    margin: 0 20% 30px 20%;
   }
 }
 
 @media screen and (max-width: 399px) {
   #restaurant-container {
     margin-top: 150px;
+    padding-top: 50px;
   }
   #reviews-container {
     margin-bottom: 50px;
@@ -351,6 +375,7 @@ nav h1 a {
 @media screen and (min-width: 400px) and (max-width: 500px) {
   #restaurant-container {
     margin-top: 100px;
+    padding-top: 50px;
   }
   #reviews-container {
     margin-bottom: 40px;
@@ -360,6 +385,7 @@ nav h1 a {
 @media screen and (min-width: 501px) and (max-width: 849px) {
   #restaurant-container {
     margin-top: 100px;
+    padding-top: 50px;
   }
   #reviews-container {
     margin-bottom: 20px;

@@ -84,8 +84,7 @@ const fillRestaurantAddress = ({address}) => {
 
 const fillRestaurantImage = (restaurant) => {
   const image = document.getElementById('restaurant-img');
-  image.className = 'restaurant-img';
-  image.alt = 'TODO';
+  image.alt = `${restaurant.name} restaurant`;
   image.src = DatabaseHelper.restaurantImageUrl(restaurant);
 };
 

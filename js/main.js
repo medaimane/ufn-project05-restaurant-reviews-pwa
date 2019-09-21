@@ -107,6 +107,7 @@ const createRestaurantHTML = restaurant => {
 const createRestaurantImage = restaurant => {
   const image = document.createElement('img');
   image.className = 'restaurant-img';
+  image.alt = `${restaurant.name} restaurant`;
   image.src = DatabaseHelper.restaurantImageUrl(restaurant);
   return image;
 };
